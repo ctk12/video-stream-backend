@@ -17,8 +17,13 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
     // adapt Next's net Server to http Server
     const httpServer: NetServer = res.socket.server as any;
     const io = new ServerIO(httpServer, {
-      cors: { origin: "*" },
       path: "/api/socketio",
+      cors: {
+        // Specify allowed origins (replace with your actual domains)
+        origin: ['https://video-stream-frontend-five.vercel.app'],
+        methods: ['GET', 'POST'], // Allowed HTTP methods (adjust as needed)
+        credentials: true, // Allow cookies (if applicable)
+      },
     });
 
     io.on('connection', (socket) => {
