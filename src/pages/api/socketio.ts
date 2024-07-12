@@ -11,12 +11,13 @@ export const config = {
 
 export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  
+
   if (!res.socket.server.io) {
     console.log("New Socket.io server...");
     // adapt Next's net Server to http Server
     const httpServer: NetServer = res.socket.server as any;
     const io = new ServerIO(httpServer, {
+      cors: { origin: "*" },
       path: "/api/socketio",
     });
 
